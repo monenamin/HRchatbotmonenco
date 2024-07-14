@@ -1,9 +1,12 @@
 #import Libs
 import streamlit as st
+import style
+from streamlitconf import input
+
 import time
 from PIL import Image 
 from langchain_community.document_loaders import UnstructuredPDFLoader
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+# from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.embeddings import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -155,102 +158,6 @@ chain = (
             | llm
             | StrOutputParser()
     )
-# from bidi.algorithm import get_display
-# import arabic_reshaper
-st.set_page_config(page_title="MONENCOCHAT", page_icon="'./monenco3.png")
-col1, col2= st.columns([1,.2])
-with col1:
-    st.markdown("""
-                    <style>
-                     h1{
-                    font-family: B Titr, sans-serif;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-    st.title("🔗 پشتیبانی منابع انسانی")
-with col2:
-    st.image('./monenco3.png' , width=150)
-st.sidebar.image('./monenco2.png') 
-
-st.markdown("""
-                    <style>
-                        div .stChatMessage{
-                    direction: ltr;
-                    text-align: right;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-
-
-
-st.markdown("""
-                    <style>  
-                        div .st-emotion-cache-1c7y2kd div .st-emotion-cache-vdokb0 p{
-                    font-family: B Titr, sans-serif;
-                    font-weight: Bold;
-                    font-size : 1.4rem;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-st.markdown("""
-                    <style>  
-                        div .st-emotion-cache-4oy321 div .st-emotion-cache-vdokb0 p{
-                    font-family: IRANSans, sans-serif;
-                    font-weight: Bold;
-                    font-size : 1.1rem;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-
-st.markdown("""
-                    <style>
-                        div .stChatMessage{
-                    direction: ltr;
-                    text-align: right;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-st.markdown("""
-                    <style>
-                        button p{
-                    font-family: IRANSans, sans-serif;
-                    font-weight: Bold;
-                    font-size : 1rem;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-st.markdown("""
-                    <style>  
-                        div .st-emotion-cache-1qgk3lp{
-                    direction: ltr;
-                    text-align: right;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-st.markdown("""
-                    <style>  
-                    p{
-                    font-family: IRANSans, sans-serif;
-                    font-weight: Bold;
-                    font-size : 1rem;
-                                        }</style>
-                    """, unsafe_allow_html=True)
-
-
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-#body style
-
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# React to user input
-if input := st.chat_input("What is up?"):
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        # input_re = arabic_reshaper.reshape(input)
-
-        st.markdown(input)
-        
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": input})
 
 answer = chain.invoke(
         {
@@ -259,56 +166,9 @@ answer = chain.invoke(
     )
 
 
-def lastIndex(answer):
-  last_index = answer.rfind('=')
-  return(last_index +1)
-
-def penulimate(answer):
-  parts = answer.rsplit("\n", 2)
-  penultimate_newline_index = len(answer) - len(parts[-1]) - len(parts[-2])
-  return (penultimate_newline_index -1 )  # output: 12
-
-
-def response_generator():
-    if input:
-            response = f"پاسخ : {answer}"
-            for word in response.split():
-                yield word + " "
-                time.sleep(0.05)
-
-# Display assistant response in chat message container
-if input:
-        with st.chat_message("assistant"):
-            response = st.write_stream(response_generator())
-# Add assistant response to chat history
-        st.session_state.messages.append({"role": "assistant", "content": response})    
-
-
-def clear_chat_history():
-  # Get the current session state
-  session_state = st.session_state
-
-  # Clear all the keys from the session state
-  for key in session_state.keys():
-    del session_state[key]
-
-  # Display a message indicating that the chat history has been cleared
-  st.success("!تاریخچه چت پاک شد") 
 
 
 
-
-# Create a button to clear chat history
-if input:
-    st.button("!حذف تاریخچه چت", on_click=clear_chat_history)
-
-from streamlit_option_menu import option_menu
-
-# 1. as sidebar menu
-with st.sidebar:
-    selected = option_menu("", ["Home", 'Settings'],                     
-    icons=['house', 'gear'], menu_icon="cast", default_index=1)
-    settings_selected = st.selectbox("Select a language:", ["English", 'Persian'])
     
 
         

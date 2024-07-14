@@ -1,7 +1,8 @@
 #import Libs
 import streamlit as st
 import style
-from streamlitconf import input
+import streamlitconf 
+# from streamlitconf import input
 
 import time
 from PIL import Image 

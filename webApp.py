@@ -2,24 +2,26 @@
 import streamlit as st
 import style
 import streamlitconf 
-# from streamlitconf import input
+
 
 import time
 from PIL import Image 
-from langchain_community.document_loaders import UnstructuredPDFLoader
+# from langchain_community.document_loaders import UnstructuredPDFLoader
 # from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+# from langchain_community.embeddings import OllamaEmbeddings
+# from langchain_text_splitters import RecursiveCharacterTextSplitter
+# from langchain_community.vectorstores import Chroma
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_community.chat_models import ChatOllama
+# from langchain_community.chat_models import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_groq import ChatGroq
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+# from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
+from langchain_community.vectorstores import FAISS
 from PyPDF2 import PdfReader
 import os 
 
@@ -143,7 +145,7 @@ RESEARCH_REPORT_TEMPLATE = """Information:
 #     You should not write the sources used in the context, and if you use them, they should not be cited at the end of any article.
 #     You have to talk in Persian language. Always assume you have to spean Persian and all the words in the context must be Persian.
 #     If the question was given outside the information, answer in Persian only in one sentence: "The answer to this question is not available in my knowledge."
-#     Please do your best, this is very important to my career. """   # noqa: E501
+#     Please do your best, this is very important to my career. """  # noqa: E501
 
 
 prompt = ChatPromptTemplate.from_messages(

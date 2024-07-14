@@ -1,10 +1,8 @@
 #import Libs
-
-
-
 import streamlit as st
 import time
 from PIL import Image 
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.embeddings import OllamaEmbeddings
@@ -136,12 +134,11 @@ RESEARCH_REPORT_TEMPLATE = """Information:
 #     in depth, with facts and numbers if available and a minimum of 100 words and a maximum of 250 words.
 #     You should strive to write the answer using all relevant and necessary information provided.
 #     The answer should not include the question itself.
-#     You can only use '.' and '،'  and you should not write the report with markdown syntax.
+#     You can only use '.' and '،'  and you should not write the report with markdown syntax execpt.
 #     Avoid writing long paragraphs; After a few sentences, write the continuation of the answers on the first line.
 #     You MUST determine your own concrete and valid opinion based on the given information. Do NOT deter to general and meaningless conclusions.
 #     You should not write the sources used in the context, and if you use them, they should not be cited at the end of any article.
 #     You have to talk in Persian language. Always assume you have to spean Persian and all the words in the context must be Persian.
-#     Print a newline between paragraphs.
 #     If the question was given outside the information, answer in Persian only in one sentence: "The answer to this question is not available in my knowledge."
 #     Please do your best, this is very important to my career. """   # noqa: E501
 
@@ -161,7 +158,7 @@ chain = (
     )
 # from bidi.algorithm import get_display
 # import arabic_reshaper
-st.set_page_config(page_title="MONENCOCHAT", page_icon=r"C:\Users\user\Desktop\monenco\monenco3.png")
+st.set_page_config(page_title="MONENCOCHAT", page_icon='./monenco3.png')
 col1, col2= st.columns([1,.2])
 with col1:
     st.markdown("""
@@ -172,8 +169,8 @@ with col1:
                     """, unsafe_allow_html=True)
     st.title("🔗 پشتیبانی منابع انسانی")
 with col2:
-    st.image(r'C:\Users\user\Desktop\monenco\monenco3.png' , width=150)
-st.sidebar.image(r'C:\Users\user\Desktop\monenco\monenco2.png') 
+    st.image('./monenco3.png' , width=150)
+st.sidebar.image('./monenco2.png') 
 # st.sidebar.image(r'C:\Users\rabieii.amin\pythonPro\LLMStreamlit\MONENCO IRAN(1).png')   
 # st.sidebar.image(r'C:\Users\rabieii.amin\pythonPro\LLMStreamlit\MONENCO IRAN(2).png') 
 # st.sidebar.image(r'C:\Users\rabieii.amin\pythonPro\LLMStreamlit\MONENCO IRAN(3).png') 
